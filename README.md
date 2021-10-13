@@ -1,1 +1,1 @@
-# Here you can check smartcontacts for course in ITpark-blockchain
+# Here you can check smartcontracts for course in ITpark-blockchain
