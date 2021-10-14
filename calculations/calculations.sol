@@ -29,6 +29,7 @@ contract Multiplication {
 	}
 
 	function setResult(uint _result) public {
+		tvm.accept();
 		result = _result;
 	}
 }
