@@ -11,36 +11,29 @@
 			]
 		},
 		{
-			"name": "renderHelloWorld",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"value0","type":"string"}
-			]
-		},
-		{
-			"name": "touch",
-			"inputs": [
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "sendValue",
+			"name": "sendValueWiothoutFee",
 			"inputs": [
 				{"name":"dest","type":"address"},
-				{"name":"amount","type":"uint128"},
-				{"name":"bounce","type":"bool"}
+				{"name":"value","type":"uint128"}
 			],
 			"outputs": [
 			]
 		},
 		{
-			"name": "timestamp",
+			"name": "sendValueWithFee",
 			"inputs": [
+				{"name":"dest","type":"address"},
+				{"name":"value","type":"uint128"}
 			],
 			"outputs": [
-				{"name":"timestamp","type":"uint32"}
+			]
+		},
+		{
+			"name": "sendAllValue",
+			"inputs": [
+				{"name":"dest","type":"address"}
+			],
+			"outputs": [
 			]
 		}
 	],
@@ -51,7 +44,6 @@
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
-		{"name":"_constructorFlag","type":"bool"},
-		{"name":"timestamp","type":"uint32"}
+		{"name":"_constructorFlag","type":"bool"}
 	]
 }

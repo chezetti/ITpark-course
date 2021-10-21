@@ -1,0 +1,70 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "createToken",
+			"inputs": [
+				{"name":"tokenPlaneName","type":"string"},
+				{"name":"planeType","type":"string"},
+				{"name":"fuelConsupmtion","type":"uint256"},
+				{"name":"planeSpeed","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "putTokenOnMarket",
+			"inputs": [
+				{"name":"tokenId","type":"uint256"},
+				{"name":"price","type":"uint256"}
+			],
+			"outputs": [
+				{"components":[{"name":"planeName","type":"string"},{"name":"planeType","type":"string"},{"name":"fuelConsupmtion","type":"uint256"},{"name":"planeSpeed","type":"uint256"}],"name":"value0","type":"map(uint256,tuple)"}
+			]
+		},
+		{
+			"name": "getTokenOwner",
+			"inputs": [
+				{"name":"tokenId","type":"uint256"}
+			],
+			"outputs": [
+				{"name":"value0","type":"uint256"}
+			]
+		},
+		{
+			"name": "getTokenInfo",
+			"inputs": [
+				{"name":"tokenId","type":"uint256"}
+			],
+			"outputs": [
+				{"name":"tokenName","type":"string"},
+				{"name":"tokenType","type":"string"},
+				{"name":"tokenFuelConsupmtion","type":"uint256"},
+				{"name":"tokenSpeed","type":"uint256"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"components":[{"name":"planeName","type":"string"},{"name":"planeType","type":"string"},{"name":"fuelConsupmtion","type":"uint256"},{"name":"planeSpeed","type":"uint256"}],"name":"tokensArr","type":"tuple[]"},
+		{"name":"tokenToOwner","type":"map(uint256,uint256)"},
+		{"components":[{"name":"planeName","type":"string"},{"name":"planeType","type":"string"},{"name":"fuelConsupmtion","type":"uint256"},{"name":"planeSpeed","type":"uint256"}],"name":"tokenForSale","type":"map(uint256,tuple)"},
+		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint256"},
+		{"name":"EMPTY_SENDER_KEY","type":"uint256"}
+	]
+}
