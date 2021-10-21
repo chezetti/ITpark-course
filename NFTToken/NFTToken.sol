@@ -13,11 +13,12 @@ contract Plane {
     Token[] tokensArr;
     mapping(uint => uint) tokenToOwner;
     mapping(uint => Token) tokenForSale;
+    mapping(string => bool) isExists;
 
     //ERRORS
     uint8 NOT_AN_ACCOUNT_OWNER = 101;
     uint8 EMPTY_SENDER_KEY = 102;
-    uint8 TOKEN_ALREAY_EXISTS = 103;
+    uint8 TOKEN_ALREADY_EXISTS = 103;
 
     constructor() public {
         require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
@@ -32,11 +33,12 @@ contract Plane {
 		_;
 	}
 
-    function createToken(string tokenPlaneName, string planeType, uint fuelConsupmtion, uint planeSpeed) public checkOwnerAndAccept{
-        //require(tokensArr.planeName == tokenPlaneName, TOKEN_ALREAY_EXISTS);
-        tokensArr.push(Token(tokenPlaneName, planeType, fuelConsupmtion, planeSpeed));
+    function createToken(string planeName, string planeType, uint fuelConsupmtion, uint planeSpeed) public checkOwnerAndAccept{
+        require(!isExists[planeName], TOKEN_ALREADY_EXISTS);
+        tokensArr.push(Token(planeName, planeType, fuelConsupmtion, planeSpeed));
         uint lastKey = tokensArr.length - 1;
         tokenToOwner[lastKey] = msg.pubkey();
+        isExists[planeName] = true;
     }
 
     function putTokenOnMarket(uint tokenId, uint price) public checkOwnerAndAccept returns (mapping(uint => Token)) {

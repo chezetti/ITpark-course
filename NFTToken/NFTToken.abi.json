@@ -13,7 +13,7 @@
 		{
 			"name": "createToken",
 			"inputs": [
-				{"name":"tokenPlaneName","type":"string"},
+				{"name":"planeName","type":"string"},
 				{"name":"planeType","type":"string"},
 				{"name":"fuelConsupmtion","type":"uint256"},
 				{"name":"planeSpeed","type":"uint256"}
@@ -64,8 +64,9 @@
 		{"components":[{"name":"planeName","type":"string"},{"name":"planeType","type":"string"},{"name":"fuelConsupmtion","type":"uint256"},{"name":"planeSpeed","type":"uint256"}],"name":"tokensArr","type":"tuple[]"},
 		{"name":"tokenToOwner","type":"map(uint256,uint256)"},
 		{"components":[{"name":"planeName","type":"string"},{"name":"planeType","type":"string"},{"name":"fuelConsupmtion","type":"uint256"},{"name":"planeSpeed","type":"uint256"}],"name":"tokenForSale","type":"map(uint256,tuple)"},
+		{"name":"isExists","type":"optional(cell)"},
 		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint8"},
 		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
-		{"name":"TOKEN_ALREAY_EXISTS","type":"uint8"}
+		{"name":"TOKEN_ALREADY_EXISTS","type":"uint8"}
 	]
 }

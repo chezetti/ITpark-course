@@ -22,15 +22,15 @@ contract Wallet {
 		_;
 	}
 
-    function sendValueWithoutFee(address dest, uint128 value) public pure checkOwnerAndAccept {
+    function transferWithoutFee(address dest, uint128 value) public pure checkOwnerAndAccept {
         dest.transfer(value, true, 1);
     }
 
-    function sendValueWithFee(address dest, uint128 value) public pure checkOwnerAndAccept {
+    function transferWithFee(address dest, uint128 value) public pure checkOwnerAndAccept {
         dest.transfer(value, true, 0);
     }
 
-    function sendAllValue(address dest) public pure checkOwnerAndAccept {
+    function transferAllValue(address dest) public pure checkOwnerAndAccept {
         dest.transfer(1, true, 160);
     }
 }
