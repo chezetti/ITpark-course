@@ -65,6 +65,7 @@
 		{"name":"tokenToOwner","type":"map(uint256,uint256)"},
 		{"components":[{"name":"planeName","type":"string"},{"name":"planeType","type":"string"},{"name":"fuelConsupmtion","type":"uint256"},{"name":"planeSpeed","type":"uint256"}],"name":"tokenForSale","type":"map(uint256,tuple)"},
 		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint256"},
-		{"name":"EMPTY_SENDER_KEY","type":"uint256"}
+		{"name":"EMPTY_SENDER_KEY","type":"uint256"},
+		{"name":"TOKEN_ALREAY_EXISTS","type":"uint256"}
 	]
 }
