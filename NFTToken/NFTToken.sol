@@ -33,7 +33,7 @@ contract Plane {
 	}
 
     function createToken(string tokenPlaneName, string planeType, uint fuelConsupmtion, uint planeSpeed) public checkOwnerAndAccept{
-        require(tokensArr.planeName == tokenPlaneName, TOKEN_ALREAY_EXISTS);
+        //require(tokensArr.planeName == tokenPlaneName, TOKEN_ALREAY_EXISTS);
         tokensArr.push(Token(tokenPlaneName, planeType, fuelConsupmtion, planeSpeed));
         uint lastKey = tokensArr.length - 1;
         tokenToOwner[lastKey] = msg.pubkey();
