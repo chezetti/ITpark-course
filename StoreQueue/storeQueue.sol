@@ -5,11 +5,14 @@ contract storeQueue {
 
     string[] private queue;
 
+    //ERRORS
+    uint8 NOT_AN_ACCOUNT_OWNER = 101;
+    uint8 EMPTY_SENDER_KEY = 102;
     uint8 ARRAY_IS_EMPTY = 103;
 
     constructor() public {
-        require(tvm.pubkey() != 0, 101);
-        require(msg.pubkey() == tvm.pubkey(), 102);
+        require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
+        require(msg.pubkey() == tvm.pubkey(), NOT_AN_ACCOUNT_OWNER);
 
         tvm.accept();
 
@@ -27,8 +30,8 @@ contract storeQueue {
     }
 
     function deleteFromArray() public returns (string[]){
-        tvm.accept();
         require(queue.empty() == false, ARRAY_IS_EMPTY);
+        tvm.accept();
          for (uint i = 0; i<queue.length-1; i++) {
             queue[i] = queue[i+1];
         }

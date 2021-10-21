@@ -74,6 +74,8 @@
 		{"name":"_constructorFlag","type":"bool"},
 		{"components":[{"name":"name","type":"string"},{"name":"timestamp","type":"uint32"},{"name":"completeness","type":"bool"}],"name":"tasksMapping","type":"map(int8,tuple)"},
 		{"name":"id","type":"int8"},
+		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint8"},
+		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
 		{"name":"INVALID_FLAG","type":"uint8"}
 	]
 }

@@ -15,9 +15,9 @@ contract Plane {
     mapping(uint => Token) tokenForSale;
 
     //ERRORS
-    uint NOT_AN_ACCOUNT_OWNER = 101;
-    uint EMPTY_SENDER_KEY = 102;
-    uint TOKEN_ALREAY_EXISTS = 103;
+    uint8 NOT_AN_ACCOUNT_OWNER = 101;
+    uint8 EMPTY_SENDER_KEY = 102;
+    uint8 TOKEN_ALREAY_EXISTS = 103;
 
     constructor() public {
         require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
