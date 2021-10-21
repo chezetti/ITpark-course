@@ -44,6 +44,9 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"queue","type":"string[]"}
+		{"name":"queue","type":"string[]"},
+		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint8"},
+		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
+		{"name":"ARRAY_IS_EMPTY","type":"uint8"}
 	]
 }

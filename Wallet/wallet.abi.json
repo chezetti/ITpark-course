@@ -11,7 +11,7 @@
 			]
 		},
 		{
-			"name": "sendValueWiothoutFee",
+			"name": "sendValueWithoutFee",
 			"inputs": [
 				{"name":"dest","type":"address"},
 				{"name":"value","type":"uint128"}
@@ -44,6 +44,8 @@
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
-		{"name":"_constructorFlag","type":"bool"}
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint256"},
+		{"name":"EMPTY_SENDER_KEY","type":"uint256"}
 	]
 }

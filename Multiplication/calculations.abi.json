@@ -43,6 +43,9 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"result","type":"uint256"}
+		{"name":"result","type":"uint256"},
+		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint8"},
+		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
+		{"name":"INVALID_NUMBER","type":"uint8"}
 	]
 }
