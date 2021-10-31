@@ -1,0 +1,137 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"baseStationAddress","type":"address"},
+				{"name":"_defenseStrength","type":"uint256"},
+				{"name":"_attackStrength","type":"uint256"},
+				{"name":"_health","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "callToAddMilitaryUnit",
+			"inputs": [
+				{"name":"baseStationAddress","type":"address"},
+				{"name":"unit","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "callToAttack",
+			"inputs": [
+				{"name":"attackedAddress","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "callToDeleteMilitaryUnit",
+			"inputs": [
+				{"name":"baseStationAddress","type":"address"},
+				{"name":"unit","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "deathHandling",
+			"inputs": [
+				{"name":"destination","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getDefenseStrength",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint256"}
+			]
+		},
+		{
+			"name": "getHealth",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint256"}
+			]
+		},
+		{
+			"name": "getAttackStrength",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint256"}
+			]
+		},
+		{
+			"name": "setDefenseStrength",
+			"inputs": [
+				{"name":"_defenseStrength","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setHealth",
+			"inputs": [
+				{"name":"_health","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setAttackStrength",
+			"inputs": [
+				{"name":"_attackStrength","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "takeAttack",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "isKilled",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"bool"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"defenseStrength","type":"uint256"},
+		{"name":"attackStrength","type":"uint256"},
+		{"name":"health","type":"uint256"},
+		{"name":"ownerAddress","type":"address"},
+		{"name":"dead","type":"bool"},
+		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint8"},
+		{"name":"WRONG_NUMBER_IS_GIVEN","type":"uint8"},
+		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
+		{"name":"ALREADY_DEAD","type":"uint8"},
+		{"name":"defenseStrength","type":"uint256"},
+		{"name":"attackStrength","type":"uint256"},
+		{"name":"health","type":"uint256"},
+		{"name":"bsAddress","type":"address"}
+	]
+}
