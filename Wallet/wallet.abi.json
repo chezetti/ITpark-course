@@ -11,7 +11,7 @@
 			]
 		},
 		{
-			"name": "sendValueWithoutFee",
+			"name": "transferWithoutFee",
 			"inputs": [
 				{"name":"dest","type":"address"},
 				{"name":"value","type":"uint128"}
@@ -20,7 +20,7 @@
 			]
 		},
 		{
-			"name": "sendValueWithFee",
+			"name": "transferWithFee",
 			"inputs": [
 				{"name":"dest","type":"address"},
 				{"name":"value","type":"uint128"}
@@ -29,7 +29,7 @@
 			]
 		},
 		{
-			"name": "sendAllValue",
+			"name": "transferAllValue",
 			"inputs": [
 				{"name":"dest","type":"address"}
 			],
