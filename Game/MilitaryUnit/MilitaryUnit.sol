@@ -3,6 +3,10 @@ pragma AbiHeader expire;
 
 import "../Interfaces/IGameObject.sol";
 
+interface IMilitaryUnit {
+    function takeAttack(uint _attackStrength) external;
+}
+
 abstract contract MilitaryUnit is IGameObject {
 
     uint private defenseStrength;
@@ -16,6 +20,7 @@ abstract contract MilitaryUnit is IGameObject {
     uint8 WRONG_NUMBER_IS_GIVEN = 101;
     uint8 EMPTY_SENDER_KEY = 102;
     uint8 ALREADY_DEAD = 103;
+    uint8 WRONG_ADDRESS = 104;
 
     modifier checkOwnerAndAccept {
         require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
@@ -24,16 +29,15 @@ abstract contract MilitaryUnit is IGameObject {
 		_;
 	}
 
-    function takeAttack() virtual external override {
+    function takeAttack(uint _attackStrength) virtual external {
         require(health != 0, ALREADY_DEAD);
         tvm.accept();
         ownerAddress = msg.sender;
-        health = attackStrength - defenseStrength;
-    }
-
-    function isKilled() virtual external override returns(bool){
-        if (health == 0) {
-            return dead = true;
+        if (_attackStrength > defenseStrength) {
+            health = _attackStrength - defenseStrength;
+        }
+        else { 
+            selfdestruct(msg.sender);
         }
     }
 
@@ -42,7 +46,7 @@ abstract contract MilitaryUnit is IGameObject {
         selfdestruct(destination);
     }
 
-    function getDefenseStrength() virtual public override view returns(uint){
+    function getDefenseStrength() virtual public  view returns(uint){
         return defenseStrength;
     }
 
@@ -50,11 +54,11 @@ abstract contract MilitaryUnit is IGameObject {
         return health;
     }
 
-    function getAttackStrength() virtual public override view returns (uint) {
+    function getAttackStrength() virtual public  view returns (uint) {
         return attackStrength;
     }
 
-    function setDefenseStrength(uint _defenseStrength) virtual public override {
+    function setDefenseStrength(uint _defenseStrength) virtual public  {
         require(_defenseStrength > 0, WRONG_NUMBER_IS_GIVEN);
         tvm.accept();
         defenseStrength = _defenseStrength;
@@ -67,7 +71,7 @@ abstract contract MilitaryUnit is IGameObject {
         health = _health;
     }
 
-    function setAttackStrength(uint _attackStrength) virtual public override {
+    function setAttackStrength(uint _attackStrength) virtual public  {
         require(_attackStrength > 0, WRONG_NUMBER_IS_GIVEN);
         tvm.accept();
         attackStrength = _attackStrength;
