@@ -6,11 +6,8 @@ import "../Interfaces/IBaseStation.sol";
 
 contract BaseStation is IBaseStation, IGameObject {
 
-    uint private defenseStrength;
     uint private health;
-    uint private attackStrength;
     address private ownerAddress;
-    bool dead;
     mapping(address => bool) militaryUnit_m;
 
     //ERRORS
@@ -45,62 +42,40 @@ contract BaseStation is IBaseStation, IGameObject {
         delete militaryUnit_m[unit];
     }
 
-    function takeAttack() virtual external override {
-        require(health != 0, ALREADY_DEAD);
+    function isKilled(address militaryUnit) virtual external override returns(bool){
         tvm.accept();
-        ownerAddress = msg.sender;
-        health = attackStrength - defenseStrength;
-    }
-
-    function isKilled() virtual external override returns(bool){
-        if (health == 0) {
-            return dead = true;
+        bool dead;
+        if (militaryUnit_m.exists(militaryUnit)) {
+            dead = false;            
+            }
+        else {
+            dead = true;
         }
     }
 
     function deathHandling(address destination) virtual external override {
         tvm.accept();
         for((address unit, bool status) : militaryUnit_m){
+            IGameObject(unit).deathHandling{value: 0.3 ton, flag: 1}(destination);
             deleteMilitaryUnit(unit);
         }
         selfdestruct(destination);
     }
 
-    function getMapping() virtual public override view returns(mapping(address => bool)) {
+    function getMapping() virtual public view returns(mapping(address => bool)) {
         for((address unit, bool status) : militaryUnit_m){
             return militaryUnit_m;
         }
-    }
-
-    function getDefenseStrength() virtual public override view returns(uint){
-        return defenseStrength;
     }
 
     function getHealth() virtual public override view returns (uint) {
         return health;
     }
 
-    function getAttackStrength() virtual public override view returns (uint) {
-        return attackStrength;
-    }
-
-    function setDefenseStrength(uint _defenseStrength) virtual public override {
-        require(_defenseStrength > 0, WRONG_NUMBER_IS_GIVEN);
-        tvm.accept();
-        defenseStrength = _defenseStrength;
-
-    }
-
     function setHealth(uint _health) virtual public override {
         require(_health > 0, WRONG_NUMBER_IS_GIVEN);
         tvm.accept();
         health = _health;
-    }
-
-    function setAttackStrength(uint _attackStrength) virtual public override {
-        require(_attackStrength > 0, WRONG_NUMBER_IS_GIVEN);
-        tvm.accept();
-        attackStrength = _attackStrength;
     }
 
 }

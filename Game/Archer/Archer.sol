@@ -9,7 +9,7 @@ contract Archer is MilitaryUnit {
     uint private defenseStrength;
     uint private attackStrength;
     uint private health;
-    address bsAddress;
+    address private bsAddress;
 
     constructor(
         address baseStationAddress, uint _defenseStrength,
@@ -19,24 +19,28 @@ contract Archer is MilitaryUnit {
         require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
         require(msg.pubkey() == tvm.pubkey(), NOT_AN_ACCOUNT_OWNER);
         tvm.accept();
-        callToAddMilitaryUnit(baseStationAddress, address(this));
+        callToAddMilitaryUnit(baseStationAddress);
         bsAddress = baseStationAddress;
         defenseStrength = _defenseStrength;
         attackStrength = _attackStrength;
         health = _health;
     }
 
-    function callToAddMilitaryUnit(address baseStationAddress, address unit) public pure checkOwnerAndAccept{
-        IBaseStation(baseStationAddress).militaryUnitAddition{value: 0.3 ton, flag: 1}(unit);
+    function callToAddMilitaryUnit(address baseStationAddress) public pure checkOwnerAndAccept {
+        IBaseStation(baseStationAddress).militaryUnitAddition{value: 0.3 ton, flag: 1}(address(this));
     }
 
-    function callToAttack(address attackedAddress) public pure checkOwnerAndAccept {
-        IGameObject(attackedAddress).takeAttack{value: 0.3 ton, flag: 1}();
+    function callToAttack(address attackedAddress) public view checkOwnerAndAccept {
+        require(address(this) != attackedAddress, WRONG_ADDRESS);
+        IMilitaryUnit(attackedAddress).takeAttack{value: 0.3 ton, flag: 1}(attackStrength);
     }
 
+    function callToDeleteMilitaryUnit(address baseStationAddress) public pure checkOwnerAndAccept {
+        IBaseStation(baseStationAddress).deleteMilitaryUnit{value: 0.3 ton, flag: 1}(address(this));
+    }
 
-    function callToDeleteMilitaryUnit(address baseStationAddress, address unit) public pure checkOwnerAndAccept{
-        IBaseStation(baseStationAddress).deleteMilitaryUnit{value: 0.3 ton, flag: 1}(unit);
+    function callToCheckDeath(address baseStationAddress) public pure checkOwnerAndAccept {
+        IBaseStation(baseStationAddress).isKilled{value: 0.3 ton, flag: 1}(address(this));
     }
 
     function deathHandling(address destination) virtual external override {
@@ -56,11 +60,14 @@ contract Archer is MilitaryUnit {
         return attackStrength;
     }
 
+    function getBaseStationAddress() virtual public view returns (address) {
+        return bsAddress;
+    }
+
     function setDefenseStrength(uint _defenseStrength) virtual public override {
         require(_defenseStrength > 0, WRONG_NUMBER_IS_GIVEN);
         tvm.accept();
         defenseStrength = _defenseStrength;
-
     }
 
     function setHealth(uint _health) virtual public override {

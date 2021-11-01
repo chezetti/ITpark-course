@@ -17,8 +17,7 @@
 		{
 			"name": "callToAddMilitaryUnit",
 			"inputs": [
-				{"name":"baseStationAddress","type":"address"},
-				{"name":"unit","type":"address"}
+				{"name":"baseStationAddress","type":"address"}
 			],
 			"outputs": [
 			]
@@ -34,8 +33,15 @@
 		{
 			"name": "callToDeleteMilitaryUnit",
 			"inputs": [
-				{"name":"baseStationAddress","type":"address"},
-				{"name":"unit","type":"address"}
+				{"name":"baseStationAddress","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "callToCheckDeath",
+			"inputs": [
+				{"name":"baseStationAddress","type":"address"}
 			],
 			"outputs": [
 			]
@@ -73,6 +79,14 @@
 			]
 		},
 		{
+			"name": "getBaseStationAddress",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"address"}
+			]
+		},
+		{
 			"name": "setDefenseStrength",
 			"inputs": [
 				{"name":"_defenseStrength","type":"uint256"}
@@ -99,16 +113,9 @@
 		{
 			"name": "takeAttack",
 			"inputs": [
+				{"name":"_attackStrength","type":"uint256"}
 			],
 			"outputs": [
-			]
-		},
-		{
-			"name": "isKilled",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"value0","type":"bool"}
 			]
 		}
 	],
@@ -129,6 +136,7 @@
 		{"name":"WRONG_NUMBER_IS_GIVEN","type":"uint8"},
 		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
 		{"name":"ALREADY_DEAD","type":"uint8"},
+		{"name":"WRONG_ADDRESS","type":"uint8"},
 		{"name":"defenseStrength","type":"uint256"},
 		{"name":"attackStrength","type":"uint256"},
 		{"name":"health","type":"uint256"},
