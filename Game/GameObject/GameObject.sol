@@ -37,10 +37,11 @@ contract GameObject is IGameObject {
         tvm.accept();
         ownerAddress = msg.sender;
         if (_attackStrength > defenseStrength) {
-            health = _attackStrength - defenseStrength;
+            uint damage = _attackStrength - defenseStrength;
+            health -= damage;
         }
         else { 
-            selfdestruct(msg.sender);
+            selfdestruct(address(this));
         }
     }
 

@@ -131,7 +131,6 @@
 		{"name":"attackStrength","type":"uint256"},
 		{"name":"health","type":"uint256"},
 		{"name":"ownerAddress","type":"address"},
-		{"name":"dead","type":"bool"},
 		{"name":"NOT_AN_ACCOUNT_OWNER","type":"uint8"},
 		{"name":"WRONG_NUMBER_IS_GIVEN","type":"uint8"},
 		{"name":"EMPTY_SENDER_KEY","type":"uint8"},

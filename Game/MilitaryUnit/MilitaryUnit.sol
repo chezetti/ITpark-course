@@ -13,7 +13,6 @@ abstract contract MilitaryUnit is IGameObject {
     uint private attackStrength;
     uint private health;
     address private ownerAddress;
-    bool dead;
 
     //ERRORS
     uint8 NOT_AN_ACCOUNT_OWNER = 100;
@@ -34,10 +33,11 @@ abstract contract MilitaryUnit is IGameObject {
         tvm.accept();
         ownerAddress = msg.sender;
         if (_attackStrength > defenseStrength) {
-            health = _attackStrength - defenseStrength;
+            uint damage = _attackStrength - defenseStrength;
+            health -= damage;
         }
         else { 
-            selfdestruct(msg.sender);
+            selfdestruct(address(this));
         }
     }
 
