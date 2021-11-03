@@ -3,6 +3,7 @@ pragma AbiHeader expire;
 
 import "../MilitaryUnit/MilitaryUnit.sol";
 import "../Interfaces/IBaseStation.sol";
+import "../Interfaces/IMilitaryUnit.sol";
 
 contract Warrior is MilitaryUnit {
 

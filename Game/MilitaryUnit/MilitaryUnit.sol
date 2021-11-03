@@ -2,12 +2,9 @@ pragma ton-solidity >= 0.35.0;
 pragma AbiHeader expire;
 
 import "../Interfaces/IGameObject.sol";
+import "../Interfaces/IMilitaryUnit.sol";
 
-interface IMilitaryUnit {
-    function takeAttack(uint _attackStrength) external;
-}
-
-abstract contract MilitaryUnit is IGameObject {
+abstract contract MilitaryUnit is IGameObject, IMilitaryUnit {
 
     uint private defenseStrength;
     uint private attackStrength;
@@ -28,7 +25,7 @@ abstract contract MilitaryUnit is IGameObject {
 		_;
 	}
 
-    function takeAttack(uint _attackStrength) virtual external {
+    function takeAttack(uint _attackStrength) virtual external override {
         require(health != 0, ALREADY_DEAD);
         tvm.accept();
         ownerAddress = msg.sender;
