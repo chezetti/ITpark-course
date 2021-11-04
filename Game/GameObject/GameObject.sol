@@ -8,14 +8,16 @@ contract GameObject is IGameObject {
     uint private defenseStrength;
     uint private attackStrength;
     uint private health;
-    uint private ownerKey;
-    address private ownerAddress;
+    uint public ownerKey;
+    address public ownerAddress;
 
     //ERRORS
     uint8 NOT_AN_ACCOUNT_OWNER = 100;
     uint8 WRONG_NUMBER_IS_GIVEN = 101;
     uint8 EMPTY_SENDER_KEY = 102;
     uint8 ALREADY_DEAD = 103;
+    uint8 WRONG_ADDRESS = 104;
+    uint8 UNIT_DOES_NOT_EXIST = 105;
 
     constructor() public {
         require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
@@ -32,37 +34,27 @@ contract GameObject is IGameObject {
 		_;
 	}
 
-    function takeAttack(uint _attackStrength) virtual external {
+    function takeAttack(uint _attackStrength) virtual external override {
         require(health != 0, ALREADY_DEAD);
         tvm.accept();
-        ownerAddress = msg.sender;
+        address attackerAddress = msg.sender;
         if (_attackStrength > defenseStrength) {
             uint damage = _attackStrength - defenseStrength;
-            health -= damage;
+            if (damage > 0) {health -= damage;}
         }
-        else { 
-            selfdestruct(address(this));
-        }
+        if (health <= 0) {selfdestruct(attackerAddress);}
     }
 
-    function deathHandling(address destination) virtual external override checkOwnerAndAccept{
+    function deathHandling(address attackerAddress) virtual external override checkOwnerAndAccept{
         tvm.accept();
-        selfdestruct(destination);
+        selfdestruct(attackerAddress);
     }
 
-    function getOwnerAddress() public view returns(address) {
-        return ownerAddress;
-    }
-
-    function getOwnerKey() public view returns(uint) {
-        return ownerKey;
-    }
-
-    function getDefenseStrength() virtual public view returns(uint){
+    function getDefenseStrength() virtual public view returns (uint){
         return defenseStrength;
     }
 
-    function getHealth() virtual public override view returns (uint) {
+    function getHealth() virtual public view returns (uint) {
         return health;
     }
 
@@ -74,10 +66,9 @@ contract GameObject is IGameObject {
         require(_defenseStrength > 0, WRONG_NUMBER_IS_GIVEN);
         tvm.accept();
         defenseStrength = _defenseStrength;
-
     }
 
-    function setHealth(uint _health) virtual public override {
+    function setHealth(uint _health) virtual public {
         require(_health > 0, WRONG_NUMBER_IS_GIVEN);
         tvm.accept();
         health = _health;
