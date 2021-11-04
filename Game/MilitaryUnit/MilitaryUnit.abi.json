@@ -6,20 +6,8 @@
 		{
 			"name": "constructor",
 			"inputs": [
-				{"name":"baseStationAddress","type":"address"},
-				{"name":"_defenseStrength","type":"uint256"},
-				{"name":"_attackStrength","type":"uint256"},
-				{"name":"_health","type":"uint256"}
 			],
 			"outputs": [
-			]
-		},
-		{
-			"name": "getBaseStationAddress",
-			"inputs": [
-			],
-			"outputs": [
-				{"name":"value0","type":"address"}
 			]
 		},
 		{
@@ -153,7 +141,6 @@
 		{"name":"EMPTY_SENDER_KEY","type":"uint8"},
 		{"name":"ALREADY_DEAD","type":"uint8"},
 		{"name":"WRONG_ADDRESS","type":"uint8"},
-		{"name":"UNIT_DOES_NOT_EXIST","type":"uint8"},
-		{"name":"bsAddress","type":"address"}
+		{"name":"UNIT_DOES_NOT_EXIST","type":"uint8"}
 	]
 }

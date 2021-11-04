@@ -1,39 +1,27 @@
 pragma ton-solidity >= 0.35.0;
 pragma AbiHeader expire;
 
+import "../GameObject/GameObject.sol";
 import "../Interfaces/IGameObject.sol";
 import "../Interfaces/IBaseStation.sol";
 
-contract BaseStation is IBaseStation, IGameObject {
+contract BaseStation is GameObject, IBaseStation {
 
-    uint private health;
-    address private ownerAddress;
-    mapping(address => bool) militaryUnit_m;
+    uint private unitIndex;
+    mapping(address => uint8) militaryUnit_m;
 
-    //ERRORS
-    uint8 NOT_AN_ACCOUNT_OWNER = 100;
-    uint8 WRONG_NUMBER_IS_GIVEN = 101;
-    uint8 EMPTY_SENDER_KEY = 102;
-    uint8 UNIT_DOES_NOT_EXIST = 103;
-    uint8 ALREADY_DEAD = 104;
-
-    constructor(uint _health) public {
+    constructor(uint _health, uint _defenseStrength) public {
         require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
         require(msg.pubkey() == tvm.pubkey(), NOT_AN_ACCOUNT_OWNER);
         tvm.accept();
-        health = _health;
+        setHealth(_health);
+        setDefenseStrength(_defenseStrength);
     }
-
-    modifier checkOwnerAndAccept {
-        require(tvm.pubkey() != 0, EMPTY_SENDER_KEY);
-        require(msg.pubkey() == tvm.pubkey(), NOT_AN_ACCOUNT_OWNER);
-		tvm.accept();
-		_;
-	}
 
     function militaryUnitAddition(address unit) virtual external override {
         tvm.accept();
-        militaryUnit_m[unit] = true;
+        unitIndex++;
+        militaryUnit_m[unit] = uint8(unitIndex);
     }
 
     function deleteMilitaryUnit(address unit) virtual public override {
@@ -43,6 +31,7 @@ contract BaseStation is IBaseStation, IGameObject {
     }
 
     function isKilled(address militaryUnit) virtual external override returns(bool){
+        require(militaryUnit_m.exists(militaryUnit) == true, UNIT_DOES_NOT_EXIST);
         tvm.accept();
         bool dead;
         if (militaryUnit_m.exists(militaryUnit)) {
@@ -53,29 +42,19 @@ contract BaseStation is IBaseStation, IGameObject {
         }
     }
 
-    function deathHandling(address destination) virtual external override {
+    function deathHandling(address attackerAddress) virtual external override {
         tvm.accept();
-        for((address unit, bool status) : militaryUnit_m){
-            IGameObject(unit).deathHandling{value: 0.3 ton, flag: 1}(destination);
+        for((address unit, uint8 index) : militaryUnit_m){
+            IGameObject(militaryUnit_m[unit]).deathHandling{value: 0.3 ton, flag: 1}(attackerAddress);
             deleteMilitaryUnit(unit);
         }
-        selfdestruct(destination);
+        selfdestruct(attackerAddress);
     }
 
-    function getMapping() virtual public view returns(mapping(address => bool)) {
-        for((address unit, bool status) : militaryUnit_m){
+    function getMapping() virtual public view returns(mapping(address => uint8)) {
+        for((address unit, uint8 index) : militaryUnit_m){
             return militaryUnit_m;
         }
-    }
-
-    function getHealth() virtual public override view returns (uint) {
-        return health;
-    }
-
-    function setHealth(uint _health) virtual public override {
-        require(_health > 0, WRONG_NUMBER_IS_GIVEN);
-        tvm.accept();
-        health = _health;
     }
 
 }
