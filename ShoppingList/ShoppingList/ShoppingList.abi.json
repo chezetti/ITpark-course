@@ -11,7 +11,7 @@
 			]
 		},
 		{
-			"name": "addToShoppingList",
+			"name": "shoppingListAddition",
 			"inputs": [
 				{"name":"name","type":"bytes"},
 				{"name":"amount","type":"uint32"}
@@ -31,7 +31,8 @@
 			"name": "buySomethingFromShoppingList",
 			"inputs": [
 				{"name":"id","type":"uint32"},
-				{"name":"bought","type":"bool"}
+				{"name":"bought","type":"bool"},
+				{"name":"price","type":"uint32"}
 			],
 			"outputs": [
 			]
