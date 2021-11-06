@@ -1,0 +1,17 @@
+Config: default
+Input arguments:
+     tvc: FillingShoppingListDebot.tvc
+      wc: None
+    keys: FillingShoppingListDebot.keys.json
+init_data: None
+is_update_tvc: None
+
+Seed phrase: "famous refuse viable cloth session subway isolate work mail bean blouse auto"
+Raw address: 0:50ce6ca597564425a0a7f835011ce1de6183ddafed004f5f1bb97fd89b371ec5
+testnet:
+Non-bounceable address (for init): 0QBQzmyll1ZEJaCn-DUBHOHeYYPdr-0AT18buX_Ymzcexfy9
+Bounceable address (for later access): kQBQzmyll1ZEJaCn-DUBHOHeYYPdr-0AT18buX_YmzcexaF4
+mainnet:
+Non-bounceable address (for init): UQBQzmyll1ZEJaCn-DUBHOHeYYPdr-0AT18buX_YmzcexUc3
+Bounceable address (for later access): EQBQzmyll1ZEJaCn-DUBHOHeYYPdr-0AT18buX_YmzcexRry
+Succeeded
