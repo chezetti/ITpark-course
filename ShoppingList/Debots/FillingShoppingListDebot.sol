@@ -9,8 +9,7 @@ import "../Interfaces/IShoppingList.sol";
 
 contract FillingShoppingListDebot is AShoppingListDebot {
 
-    string m_name;
-    PurchasesStatistics purchases;      
+    string m_name;    
 
     function onError(uint32 sdkError, uint32 exitCode) public {
         Terminal.print(0, format("Operation failed. sdkError {}, exitCode {}", sdkError, exitCode));
@@ -22,9 +21,9 @@ contract FillingShoppingListDebot is AShoppingListDebot {
         Menu.select(
             format(
                 "You have {}, {}, {} (unpaid/paid/total) purchases",
-                    purchases.unPaidCount,
-                    purchases.paidCount,
-                    purchases.paidCount + purchases.unPaidCount
+                    purchasesStatistics.unPaidCount,
+                    purchasesStatistics.paidCount,
+                    purchasesStatistics.paidCount + purchasesStatistics.unPaidCount
             ),
             sep,
             [
@@ -96,7 +95,7 @@ contract FillingShoppingListDebot is AShoppingListDebot {
 
     function deleteFromShoppingList(uint32 index) public {
         index = index;
-        if (purchases.paidCount + purchases.unPaidCount > 0) {
+        if (purchasesStatistics.paidCount + purchasesStatistics.unPaidCount > 0) {
             Terminal.input(tvm.functionId(_deleteFromShoppingList), "Enter item number from shopping list: ", false);
         } else {
             Terminal.print(0, "Sorry, you have no items at your shopping list");
@@ -118,5 +117,41 @@ contract FillingShoppingListDebot is AShoppingListDebot {
                 onErrorId: tvm.functionId(onError)
             }(uint32(num));
     }
+
+    function _getPurchaseStatistics(uint32 answerId) public override view {
+        optional(uint256) none;
+        IShoppingList(m_address).getPurchasesStatistics{
+            abiVer: 2,
+            extMsg: true,
+            sign: false,
+            pubkey: none,
+            time: uint64(now),
+            expire: 0,
+            callbackId: answerId,
+            onErrorId: 0
+        }();
+    }
+
+    function setPurchaseStatistics(PurchasesStatistics _purchasesStatistics) public override {
+        purchasesStatistics = _purchasesStatistics;
+        _menu();
+    }
+
+    function getDebotInfo() public functionID(0xDEB) override view returns(
+        string name, string version, string publisher, string key, string author,
+        address support, string hello, string language, string dabi, bytes icon
+    ) {
+        name = "Filling Shopping List Debot";
+        version = "v1";
+        publisher = "Riezowe Kawatashi";
+        key = "ShoppingList manager";
+        author = "Riezowe Kawatashi";
+        support = address(0);
+        hello = "Hello, i'm a Filling Shopping List Debott.";
+        language = "en";
+        dabi = m_debotAbi.get();
+        icon = m_icon;
+    }
+
     
 }
