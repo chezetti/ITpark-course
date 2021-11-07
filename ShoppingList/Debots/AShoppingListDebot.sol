@@ -26,7 +26,7 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
     address m_msigAddress;  // User wallet address
     PurchasesStatistics purchasesStatistics;
 
-    uint32 INITIAL_BALANCE =  200000000;  // Initial TODO contract balance
+    uint32 INITIAL_BALANCE =  200000000; 
 
     function setShoppingListCode(TvmCell code, TvmCell data) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
@@ -36,8 +36,8 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
         m_ShoppingListStateInit = tvm.buildStateInit(m_ShoppingListCode, m_ShoppingListData);
     }
 
-    function onSuccess() public view {
-        _getPuchaseStatistics(tvm.functionId(setPuchaseStatistics));
+    function onSuccess() virtual public view {
+        _getPurchaseStatistics(tvm.functionId(setPurchaseStatistics));
     }
 
     function start() public override {
@@ -62,7 +62,7 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
 
     function checkStatus(int8 acc_type) public {
         if (acc_type == 1) { // acc is active and  contract is already deployed
-        _getPuchaseStatistics(tvm.functionId(setPuchaseStatistics));
+        _getPurchaseStatistics(tvm.functionId(setPurchaseStatistics));
 
         } else if (acc_type == -1)  { // acc is inactive
             Terminal.print(0, "You don't have a shopping list yet, so a new contract with an initial balance of 0.2 tokens will be deployed");
@@ -96,7 +96,6 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
     }
 
     function onErrorRepeatCredit(uint32 sdkError, uint32 exitCode) public {
-        // TODO: check errors if needed.
         sdkError;
         exitCode;
         creditAccount(m_msigAddress);
@@ -133,13 +132,12 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
     }
 
     function onErrorRepeatDeploy(uint32 sdkError, uint32 exitCode) public view {
-        // TODO: check errors if needed.
         sdkError;
         exitCode;
         deploy();
     }
 
-    function _getPuchaseStatistics(uint32 answerId) private view {
+    function _getPurchaseStatistics(uint32 answerId) virtual public view {
         optional(uint256) none;
         IShoppingList(m_address).getPurchasesStatistics{
             abiVer: 2,
@@ -153,7 +151,7 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
         }();
     }
 
-    function setPuchaseStatistics(PurchasesStatistics _purchasesStatistics) public {
+    function setPurchaseStatistics(PurchasesStatistics _purchasesStatistics) virtual public {
         purchasesStatistics = _purchasesStatistics;
     }
 
@@ -161,13 +159,13 @@ abstract contract AShoppingListDebot is Debot, Upgradable {
         tvm.resetStorage();
     }
 
-    function getDebotInfo() public functionID(0xDEB) override view returns(
+    function getDebotInfo() virtual public functionID(0xDEB) override view returns(
         string name, string version, string publisher, string key, string author,
         address support, string hello, string language, string dabi, bytes icon
     ) {
         name = "ShoppingList Debot";
         version = "v1";
-        publisher = "ITpark";
+        publisher = "Riezowe Kawatashi";
         key = "ShoppingList manager";
         author = "Riezowe Kawatashi";
         support = address(0);

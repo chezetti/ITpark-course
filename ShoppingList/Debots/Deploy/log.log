@@ -1,0 +1,17 @@
+Config: default
+Input arguments:
+     tvc: VisitStoreDebot.tvc
+      wc: None
+    keys: VisitStoreDebot.keys.json
+init_data: None
+is_update_tvc: None
+
+Seed phrase: "churn over supply select meat moral drive indicate fiber angry melody bundle"
+Raw address: 0:df9099a2699208e0edd8005a0edc48eaa61a53a4bca3ac976b9b778340f3981b
+testnet:
+Non-bounceable address (for init): 0QDfkJmiaZII4O3YAFoO3EjqphpTpLyjrJdrm3eDQPOYG-6Y
+Bounceable address (for later access): kQDfkJmiaZII4O3YAFoO3EjqphpTpLyjrJdrm3eDQPOYG7Nd
+mainnet:
+Non-bounceable address (for init): UQDfkJmiaZII4O3YAFoO3EjqphpTpLyjrJdrm3eDQPOYG1US
+Bounceable address (for later access): EQDfkJmiaZII4O3YAFoO3EjqphpTpLyjrJdrm3eDQPOYGwjX
+Succeeded

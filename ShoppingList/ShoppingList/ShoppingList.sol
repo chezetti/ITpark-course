@@ -36,6 +36,7 @@ contract ShoppingList is IShoppingList {
     function deleteFromShoppingList(uint32 id) public override checkOwnerAndAccept {
         require(m_purchases.exists(id), DOES_NOT_EXIST);
         delete m_purchases[id];
+        m_count--;
     }
 
     function buySomethingFromShoppingList(uint32 id, bool bought, uint32 price) public override checkOwnerAndAccept {
@@ -70,9 +71,9 @@ contract ShoppingList is IShoppingList {
 
         for((, Purchase purchase) : m_purchases) {
             if  (purchase.isBought) {
-                paidCount ++;
+                paidCount++;
             } else {
-                unPaidCount ++;
+                unPaidCount++;
             }
         }
 

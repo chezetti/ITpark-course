@@ -9,7 +9,6 @@ import "../Interfaces/IShoppingList.sol";
 
 contract VisitStoreDebot is AShoppingListDebot {
 
-    PurchasesStatistics purchases; 
     uint32 m_taskId;   
     uint32 m_price;
 
@@ -23,9 +22,9 @@ contract VisitStoreDebot is AShoppingListDebot {
         Menu.select(
             format(
                 "You have {}, {}, {} (unpaid/paid/total) purchases",
-                    purchases.unPaidCount,
-                    purchases.paidCount,
-                    purchases.paidCount + purchases.unPaidCount
+                    purchasesStatistics.unPaidCount,
+                    purchasesStatistics.paidCount,
+                    purchasesStatistics.paidCount + purchasesStatistics.unPaidCount
             ),
             sep,
             [
@@ -72,7 +71,7 @@ contract VisitStoreDebot is AShoppingListDebot {
 
     function deleteFromShoppingList(uint32 index) public {
         index = index;
-        if (purchases.paidCount + purchases.unPaidCount > 0) {
+        if (purchasesStatistics.paidCount + purchasesStatistics.unPaidCount > 0) {
             Terminal.input(tvm.functionId(_deleteFromShoppingList), "Enter item number from shopping list: ", false);
         } else {
             Terminal.print(0, "Sorry, entered number not found");
@@ -97,7 +96,7 @@ contract VisitStoreDebot is AShoppingListDebot {
 
     function buySomethingFromShoppingList(uint32 index) public {
         index = index;
-        if (purchases.paidCount + purchases.unPaidCount > 0) {
+        if (purchasesStatistics.paidCount + purchasesStatistics.unPaidCount > 0) {
             Terminal.input(tvm.functionId(_buySomethingFromShoppingList), "Enter item number from shopping list: ", false);
         } else {
             Terminal.print(0, "Sorry, you have no items at your shopping list");
@@ -116,7 +115,7 @@ contract VisitStoreDebot is AShoppingListDebot {
         (uint256 num,) = stoi(value);
         m_price = uint32(num);
 
-        Terminal.input(tvm.functionId(__buySomethingFromShoppingList), "Are you sure you want to buy this item? (yes/no)", false);
+        Terminal.input(tvm.functionId(___buySomethingFromShoppingList), "Are you sure you want to buy this item? (yes/no)", false);
     }
 
     function ___buySomethingFromShoppingList(string value) public view {
@@ -127,6 +126,7 @@ contract VisitStoreDebot is AShoppingListDebot {
         else if (value == "no") {
             bought = false;
         }
+        else tvm.functionId(onError);
         optional(uint256) pubkey = 0;
         IShoppingList(m_address).buySomethingFromShoppingList{
                 abiVer: 2,
@@ -138,6 +138,41 @@ contract VisitStoreDebot is AShoppingListDebot {
                 callbackId: tvm.functionId(onSuccess),
                 onErrorId: tvm.functionId(onError)
             }(m_taskId, bought, m_price);
+    }
+
+    function _getPurchaseStatistics(uint32 answerId) public override view {
+        optional(uint256) none;
+        IShoppingList(m_address).getPurchasesStatistics{
+            abiVer: 2,
+            extMsg: true,
+            sign: false,
+            pubkey: none,
+            time: uint64(now),
+            expire: 0,
+            callbackId: answerId,
+            onErrorId: 0
+        }();
+    }
+
+    function setPurchaseStatistics(PurchasesStatistics _purchasesStatistics) public override {
+        purchasesStatistics = _purchasesStatistics;
+        _menu();
+    }
+
+    function getDebotInfo() public functionID(0xDEB) override view returns(
+        string name, string version, string publisher, string key, string author,
+        address support, string hello, string language, string dabi, bytes icon
+    ) {
+        name = "Visit Store Debot";
+        version = "v1";
+        publisher = "Riezowe Kawatashi";
+        key = "ShoppingList manager";
+        author = "Riezowe Kawatashi";
+        support = address(0);
+        hello = "Hello, i'm a Visit Store Debot.";
+        language = "en";
+        dabi = m_debotAbi.get();
+        icon = m_icon;
     }
 
 }

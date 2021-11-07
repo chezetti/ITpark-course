@@ -9,10 +9,10 @@ else
     exit
 fi
 
-DEBOT_NAME=FillingShoppingListDebot
+DEBOT_NAME=../FillingShoppingListDebot
 giver=0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94
 function giver {
-$tos --url http://127.0.0.1 call --abi local_giver.abi.json $giver sendGrams "{\"dest\":\"$1\",\"amount\":10000000000}"
+$tos --url http://127.0.0.1 call --abi giver.abi.json $giver sendGrams "{\"dest\":\"$1\",\"amount\":10000000000}"
 }
 
 function get_address {
@@ -20,7 +20,7 @@ echo $(cat log.log | grep "Raw address:" | cut -d ' ' -f 3)
 }
 
 function genaddr {
-$tos genaddr $1.tvc $1.abi.json --genkey $1.keys.json > log.log
+$tos genaddr $1.tvc $1.abi.json --genkey $1.keys.json > ./Deploy/log.log
 }
 
 function get_decode {
@@ -46,5 +46,5 @@ $tos --url $NETWORK call $DEBOT_ADDRESS setABI "{\"dabi\":\"$DEBOT_ABI\"}" --sig
 $tos --url $NETWORK call --abi $DEBOT_NAME.abi.json --sign $DEBOT_NAME.keys.json $DEBOT_ADDRESS setShoppingListCode ShoppingList.decode.json
 
 echo DONE
-echo $DEBOT_ADDRESS > address.log
+echo $DEBOT_ADDRESS > ./Deploy/address.log
 echo debot $DEBOT_ADDRESS
